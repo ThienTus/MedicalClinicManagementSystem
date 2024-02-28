@@ -87,7 +87,7 @@ const RegisterSchedule = ({ route, navigation }) => {
                         <View key={schedule.id} style={styles.scheduleItem}>
                             <Text style={styles.scheduleText}>Mã đặt chỗ: {schedule.id}</Text>
                             <Text style={styles.scheduleText}>Mã lịch trực: {schedule.schedule}</Text>
-                            <Text style={styles.scheduleText}>Trạng thái: {schedule.confirmed == "true" ? "Đã xác nhận" : "Chưa xác nhận"}</Text>
+                            <Text style={styles.scheduleText}>Trạng thái: {schedule.confirmed == true ? "Đã xác nhận" : "Chưa xác nhận"}</Text>
                             <Text style={styles.scheduleText}>Ngày: {schedule.appointment_date}</Text>
                             <Text style={styles.scheduleText}>Thời gian: {schedule.time_slot} giờ</Text>
 
