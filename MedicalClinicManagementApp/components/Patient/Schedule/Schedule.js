@@ -75,6 +75,16 @@ const Schedule = ({ route, navigation }) => {
         }
     };
 
+    const getTimeSlots = (shift) => {
+        if (shift === "Morning") {
+            return ["7-8", "8-9", "9-10", "10-11", "11-12"];
+        } else if (shift === "Afternoon") {
+            return ["12-13", "13-14", "14-15", "15-16", "16-17"];
+        } else if (shift === "Night") {
+            return ["17-18", "18-19", "19-20", "20-21", "21-22"];
+        }
+        return [];
+    };
 
     return (
         <View style={styles.container}>
@@ -93,7 +103,7 @@ const Schedule = ({ route, navigation }) => {
                                 <>
                                     <Text style={styles.sectionTitle}>Chọn khung giờ khám bệnh:</Text>
                                     <View style={styles.timeSlots}>
-                                        {["7-8", "9-10", "10-11", "11-12", "12-13", "13-14", "15-16", "17-18", "19-20", "21-22"].map((time) => (
+                                        {getTimeSlots(schedule.shift).map((time) => (
                                             <TouchableOpacity
                                                 key={time}
                                                 style={selectedTime === time ? styles.selectedTimeSlot : styles.timeSlot}
