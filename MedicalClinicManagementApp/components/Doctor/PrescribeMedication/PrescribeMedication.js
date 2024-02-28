@@ -32,7 +32,7 @@ const PrescribeMedication = ({ route, navigation }) => {
         }
     };
 
-    
+
     const loadMedicines = async () => {
         try {
             const response = await API.get(endpoints.medicines);
@@ -93,6 +93,32 @@ const PrescribeMedication = ({ route, navigation }) => {
         }
     };
 
+    const handleMedicineChange = (scheduleId, itemValue) => {
+        const updatedSchedules = schedules.map(schedule =>
+            schedule.id === scheduleId ? { ...schedule, selectedMedicine: itemValue } : schedule
+        );
+        setSchedules(updatedSchedules);
+        setSelectedMedicine(itemValue);
+    };
+
+    // Hàm xử lý thay đổi triệu chứng
+    const handleSymptomsChange = (scheduleId, text) => {
+        const updatedSchedules = schedules.map(schedule =>
+            schedule.id === scheduleId ? { ...schedule, symptoms: text } : schedule
+        );
+        setSchedules(updatedSchedules);
+        setSymptoms(text);
+    };
+
+    // Hàm xử lý thay đổi chẩn đoán
+    const handleDiagnosisChange = (scheduleId, text) => {
+        const updatedSchedules = schedules.map(schedule =>
+            schedule.id === scheduleId ? { ...schedule, diagnosis: text } : schedule
+        );
+        setSchedules(updatedSchedules);
+        setDiagnosis(text);
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.subject}>KÊ ĐƠN</Text>
@@ -107,43 +133,36 @@ const PrescribeMedication = ({ route, navigation }) => {
                             <Text style={styles.scheduleText}>Trạng thái: {schedule.confirmed == true ? "Đã xác nhận" : "Chưa xác nhận"}</Text>
                             <Text style={styles.scheduleText}>Ngày: {schedule.appointment_date}</Text>
                             <Text style={styles.scheduleText}>Thời gian: {schedule.time_slot} giờ</Text>
-                            {/* <View style={styles.history}>
-                                <TouchableOpacity style={styles.submitButton} onPress={() => approveSchedule(schedule)}>
-                                    <Text style={styles.submitButtonText}>Xem Lịch Sử Khám</Text>
-                                </TouchableOpacity>
-                            </View> */}
 
                             {schedule.confirmed === true && (
                                 <>
                                     <TextInput
                                         style={styles.input}
-                                        onChangeText={(text) => setSymptoms(text)}
-                                        value={symptoms}
+                                        onChangeText={(text) => handleSymptomsChange(schedule.id, text)}
+                                        value={schedule.symptoms || ""}
                                         placeholder="Triệu chứng"
                                     />
                                     <TextInput
                                         style={styles.input}
-                                        onChangeText={(text) => setDiagnosis(text)}
-                                        value={diagnosis}
+                                        onChangeText={(text) => handleDiagnosisChange(schedule.id, text)}
+                                        value={schedule.diagnosis || ""}
                                         placeholder="Chẩn đoán"
                                     />
                                     <Picker
-                                        selectedValue={selectedMedicine}
-                                        onValueChange={(itemValue, itemIndex) => setSelectedMedicine(itemValue)}
+                                        selectedValue={schedule.selectedMedicine || ""}
+                                        onValueChange={(itemValue, itemIndex) => handleMedicineChange(schedule.id, itemValue)}
                                         style={styles.picker}
                                         itemTextStyle={{ fontSize: 18, color: 'blue' }}
-
                                     >
                                         {medicines.map((medicine) => (
                                             <Text style={styles.pickerItem} label={medicine.name} value={medicine.id}>Admin</Text>
-                                        ))}
+                                            ))}
                                     </Picker>
                                     <TouchableOpacity style={styles.submitButton} onPress={() => prescriptions(schedule)}>
                                         <Text style={styles.submitButtonText}>Kê Đơn Thuốc</Text>
                                     </TouchableOpacity>
                                 </>
                             )}
-
                         </View>
                     ))
                 ) : (
