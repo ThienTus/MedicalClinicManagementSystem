@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "MedicalClinicManagementApp",
+    "slug": "MedicalClinicManagementApp",
+    "version": "1.0.0",
+  
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "MedicalClinicManagementApp"
+}
